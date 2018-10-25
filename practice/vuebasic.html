@@ -1,0 +1,92 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app">
+  {{ message }}
+</div>
+
+<div id="app-2">
+	<span v-bind:title='message' >
+		Testing for messgae
+	</span>
+</div>
+
+<div id="app-3">
+	<h1 v-if='seen'>Heading</h1>
+</div>
+
+<div id="app-4">
+  <ol>
+    <li v-for="todo in todos">
+      {{ todo.text }}
+    </li>
+  </ol>
+</div>
+
+<div id="app-5">
+	<button v-on:click='clicked'>Click me</button>
+</div>
+
+<div id="app-6">
+	<p>{{ message }}</p>
+	<input v-model='message' />
+	<button v-on:click='addData'>Add</button>
+</div>
+<script>
+var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue!'
+  }
+})
+
+var app2 = new Vue({
+  el: '#app-2',
+  data:{
+	 message:'testehgue',
+	 classname: 'hello'
+  }
+})
+
+var app3 = new Vue({
+  el: '#app-3',
+  data:{
+	 seen: true
+  }
+})
+
+var app4 = new Vue({
+  el: '#app-4',
+  data: {
+    todos: [
+      { text: 'Learn JavaScript' },
+      { text: 'Learn Vue' },
+      { text: 'Build something awesome' }
+    ]
+  }
+})
+
+var app5 = new Vue({
+  el: '#app-5',
+  data:{
+	message:'Testing'
+  },
+  methods:{
+	  clicked: function(){
+		alert(this.message)
+	  }
+  }
+})
+
+
+var app6 = new Vue({
+  el:'#app-6', 
+  data:{
+	  message:'yoo' 
+  },
+  methods:{
+	addData: function(){
+		app4.todos.push({ text: this.message})
+	}  
+  }
+})
+</script>

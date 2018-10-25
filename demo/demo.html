@@ -1,0 +1,110 @@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style>
+   .list-item {
+      display: inline-block;
+      margin-right: 10px;
+   }
+   .list-enter-active, .list-leave-active {
+      transition: all 1s;
+   }
+   .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+      opacity: 0;
+      transform: translateY(30px);
+   }
+   .input-container{
+      width: 33%;
+   }.dropbox {
+    outline: 2px dashed grey; /* the dash box */
+    outline-offset: -10px;
+    background: lightcyan;
+    color: dimgray;
+    padding: 10px 10px;
+    min-height: 200px; /* minimum height */
+    position: relative;
+    cursor: pointer;
+  }
+
+  .input-file {
+    opacity: 0; /* invisible but it's there! */
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    cursor: pointer;
+  }
+
+  .dropbox:hover {
+    background: lightblue; /* when mouse over to the drop zone, change color */
+  }
+
+  .dropbox p {
+    font-size: 1.2em;
+    text-align: center;
+    padding: 50px 0;
+  }
+</style>
+<div id="app" class="row">
+	<transition-group name="list" tag="p">
+  <div class="container col-md-4"  v-for="image in uploadedImages" v-bind:key="image">
+      <!--UPLOAD-->
+      <form enctype="multipart/form-data">
+        <div class="dropbox" style="height: 320px;">
+          <img :src="image.url" :id="image.id" 
+            accept="image/*" class="list-item" style="width: 100%;height: 301px;"/>
+        </div>
+      </form>
+  </div>
+  </transition-group>
+  <transition-group name="list" tag="p">
+  <div class="container col-md-4"  v-for="input in inputs" v-bind:key="input">
+      <!--UPLOAD-->
+      <form enctype="multipart/form-data">
+        <div class="dropbox">
+          <input :type="input.type" :name="input.name" 
+            accept="image/*" multiple ref="files" class="input-file list-item" @change="handleFileUplaods()">
+            <p>
+              Drag your file(s) here to begin<br> or click to browse
+            </p>
+            <p>
+              Uploading files...
+            </p>
+        </div>
+      </form>
+  </div>
+  </transition-group>
+  
+  <button @click="add_file">Add</button>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+var app  = new Vue({ 
+  el: '#app',
+  data:{
+	 uploadedImages	: [],
+     inputs: [],
+     files: [],
+     message:"This is testing data"
+  },
+  watch:{
+	 inputs: {
+	     deep: true,
+	     handler: function(newVal, oldVal){
+			 console.log(newVal);
+			 console.log(oldVal);
+		 } 
+	}
+  },
+  methods:{
+      add_file: function(){
+		      this.inputs.push({
+  			      type: 'file',
+  		       	name: 'file[]'
+  		    });
+      },
+      handleFileUplaods: function(){
+          this.files =  this.$refs.file.files;
+          console.log(this.files);
+      }
+  }
+})
+</script>
